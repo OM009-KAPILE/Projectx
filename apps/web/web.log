@@ -1,0 +1,239 @@
+
+> projectx@1.0.0 dev:web
+> npm --prefix apps/web run dev
+
+
+> @projectx/web@1.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 94 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+5:46:06 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css, /src/pages/messages/MessagesPage.tsx, /src/pages/profile/ProfilePage.tsx, /src/pages/settings/SettingsPage.tsx
+5:46:40 PM [vite] ws proxy error:
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+5:57:10 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+5:58:45 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+5:59:36 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:06:56 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css, /src/pages/messages/MessagesPage.tsx, /src/pages/profile/ProfilePage.tsx, /src/pages/settings/SettingsPage.tsx
+6:29:44 PM [vite] hmr update /src/pages/auth/LoginPage.tsx, /src/index.css
+6:29:50 PM [vite] hmr update /src/components/common/Navbar.tsx, /src/index.css
+6:29:57 PM [vite] hmr update /src/pages/applications/ApplicationsPage.tsx, /src/index.css
+6:30:05 PM [vite] hmr update /src/pages/home/HomePage.tsx, /src/index.css
+6:52:58 PM [vite] hmr update /src/pages/home/HomePage.tsx, /src/index.css
+6:53:13 PM [vite] hmr update /src/pages/home/HomePage.tsx, /src/index.css
+6:53:13 PM [vite] Internal server error: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/home/HomePage.tsx: Unterminated JSX contents. (799:10)
+
+  797 |         </Modal>
+  798 |       )}
+> 799 |     </div>
+      |           ^
+  800 |   );
+  801 | };
+  802 |
+  Plugin: vite:react-babel
+  File: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/home/HomePage.tsx:799:10
+  797|          </Modal>
+  798|        )}
+  799|      </div>
+     |            ^
+  800|    );
+  801|  };
+      at constructor (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6620:19)
+      at TypeScriptParserMixin.jsxReadToken (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4464:20)
+      at TypeScriptParserMixin.getTokenFromCode (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4790:12)
+      at TypeScriptParserMixin.getTokenFromCode (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10008:11)
+      at TypeScriptParserMixin.nextToken (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:5803:10)
+      at TypeScriptParserMixin.next (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:5713:10)
+      at TypeScriptParserMixin.eat (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:5717:12)
+      at TypeScriptParserMixin.expect (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6919:15)
+      at TypeScriptParserMixin.jsxParseClosingElementAt (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4696:10)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4711:37)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4714:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4765:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4775:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10925:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:39
+      at TypeScriptParserMixin.tryParse (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6928:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:18)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12455:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12522:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11701:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11357:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4780:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10925:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9807:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10805:23)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12450:16)
+      at TypeScriptParserMixin.parseExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:13171:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12827:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9529:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12796:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12776:17)
+6:53:37 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:53:43 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:54:01 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:54:17 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:54:17 PM [vite] Internal server error: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/workspace/ProjectWorkspacePage.tsx: Unexpected token, expected "," (1181:6)
+
+  1179 |           </div>
+  1180 |         </div>
+> 1181 |       {/* ==================================================== */}
+       |       ^
+  1182 |       {/* SECTION 3: APPLICANT REVIEW & TEAM FORMATION */}
+  1183 |       {/* ==================================================== */}
+  1184 |       {activeTab === 'applications' && (
+  Plugin: vite:react-babel
+  File: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/workspace/ProjectWorkspacePage.tsx:1181:6
+  1179|            </div>
+  1180|          </div>
+  1181|        {/* ==================================================== */}
+     |        ^
+  1182|        {/* SECTION 3: APPLICANT REVIEW & TEAM FORMATION */}
+  1183|        {/* ==================================================== */}
+      at constructor (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6620:19)
+      at TypeScriptParserMixin.unexpected (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6640:16)
+      at TypeScriptParserMixin.expect (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6920:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11687:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11357:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4780:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOpBaseRightExpr (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11007:34)
+      at TypeScriptParserMixin.parseExprOpRightExpr (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11002:21)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10968:27)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9327:18)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10974:21)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9327:18)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10929:17)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9807:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10805:23)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12455:12)
+      at TypeScriptParserMixin.parseExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4648:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4727:36)
+      at TypeScriptParserMixin.jsxParseElement (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4765:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4775:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10925:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:39
+      at TypeScriptParserMixin.tryParse (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6928:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:18)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12455:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12522:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11701:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11357:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4780:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+6:54:33 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css
+6:54:33 PM [vite] Internal server error: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/workspace/ProjectWorkspacePage.tsx: Unexpected token, expected "," (1181:6)
+
+  1179 |           </div>
+  1180 |         </div>
+> 1181 |       {/* ==================================================== */}
+       |       ^
+  1182 |       {/* SECTION 3: APPLICANT REVIEW & TEAM FORMATION */}
+  1183 |       {/* ==================================================== */}
+  1184 |       {activeTab === 'applications' && (
+  Plugin: vite:react-babel
+  File: /Users/omkapile/Desktop/STUDENTS/apps/web/src/pages/workspace/ProjectWorkspacePage.tsx:1181:6
+  1179|            </div>
+  1180|          </div>
+  1181|        {/* ==================================================== */}
+     |        ^
+  1182|        {/* SECTION 3: APPLICANT REVIEW & TEAM FORMATION */}
+  1183|        {/* ==================================================== */}
+      at constructor (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6620:19)
+      at TypeScriptParserMixin.unexpected (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6640:16)
+      at TypeScriptParserMixin.expect (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6920:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11687:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11357:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4780:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOpBaseRightExpr (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11007:34)
+      at TypeScriptParserMixin.parseExprOpRightExpr (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11002:21)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10968:27)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9327:18)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10974:21)
+      at TypeScriptParserMixin.parseExprOp (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9327:18)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10929:17)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9807:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10805:23)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12455:12)
+      at TypeScriptParserMixin.parseExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10801:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4648:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4727:36)
+      at TypeScriptParserMixin.jsxParseElement (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4765:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4775:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11067:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9858:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10920:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10925:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10902:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10852:21)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:39
+      at TypeScriptParserMixin.tryParse (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:6928:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:9796:18)
+      at /Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:39
+      at TypeScriptParserMixin.allowInAnd (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12455:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:10821:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:12522:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11701:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11357:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:4780:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11102:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/omkapile/Desktop/STUDENTS/node_modules/@babel/parser/lib/index.js:11087:21)
+6:55:03 PM [vite] hmr update /src/pages/project-detail/ProjectDetailPage.tsx, /src/index.css
+6:55:25 PM [vite] hmr update /src/pages/project-detail/ProjectDetailPage.tsx, /src/index.css
+6:55:39 PM [vite] hmr update /src/pages/project-detail/ProjectDetailPage.tsx, /src/index.css
+6:55:48 PM [vite] hmr update /src/components/common/Navbar.tsx, /src/index.css
+6:56:14 PM [vite] hmr update /src/pages/home/HomePage.tsx, /src/index.css
+6:56:26 PM [vite] hmr update /src/pages/workspace/ProjectWorkspacePage.tsx, /src/index.css

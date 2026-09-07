@@ -1,0 +1,575 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model University {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  shortName   String?
+  website     String?
+  country     String    @default("United States")
+  logoUrl     String?
+  colleges    College[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model College {
+  id                  String                   @id @default(uuid())
+  name                String
+  domain              String                   @unique
+  city                String
+  country             String
+  logoUrl             String?
+  universityId        String?
+  university          University?              @relation(fields: [universityId], references: [id], onDelete: SetNull)
+  departments         Department[]
+  users               User[]
+  selectedForProjects ProjectSelectedCollege[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+}
+
+model Department {
+  id          String    @id @default(uuid())
+  name        String
+  code        String?   // CS, EECS, MECH, BIO, etc.
+  collegeId   String
+  college     College   @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  courses     Course[]
+  users       User[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Course {
+  id          String     @id @default(uuid())
+  name        String     // e.g. B.S. Computer Science, M.S. Robotics
+  code        String?    // CS-101, EECS-MS
+  degreeLevel String     @default("UNDERGRADUATE") // UNDERGRADUATE | GRADUATE | DOCTORATE
+  departmentId String
+  department  Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  users       User[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model ProjectSelectedCollege {
+  id         String   @id @default(uuid())
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  collegeId  String
+  college    College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([projectId, collegeId])
+}
+
+model User {
+  id              String         @id @default(uuid())
+  email           String         @unique
+  passwordHash    String
+  name            String
+  avatarUrl       String?
+  bio             String?
+  role            String         @default("STUDENT") // STUDENT | ADMIN
+  collegeId       String
+  college         College        @relation(fields: [collegeId], references: [id])
+  departmentId    String?
+  department      Department?    @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  courseId        String?
+  courseRel       Course?        @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  graduationYear           Int?
+  major                    String?
+  course                   String?
+  githubUrl                String?
+  githubUsername           String?
+  githubConnectedAt        DateTime?
+  githubDataCache          String?        // Cached JSON of repositories, languages, metrics
+  portfolioUrl             String?
+  linkedinUrl              String?
+  isVerified               Boolean        @default(false)
+  weeklyAvailability       String?        // 0-5h | 5-10h | 10-20h | 20+h
+  interests                String?        // Comma separated domain interests
+  onboardingCompleted      Boolean        @default(false)
+  verificationCode         String?
+  verificationCodeExpires  DateTime?
+  resetPasswordToken       String?
+  resetPasswordExpires     DateTime?
+  
+  // Privacy & Appearance Settings
+  profileVisibility        String         @default("PUBLIC") // PUBLIC | REGISTERED_ONLY | PRIVATE
+  collegeVisibility        Boolean        @default(true)
+  portfolioVisibility      Boolean        @default(true)
+  defaultProjectPrivacy    String         @default("PROGRESSIVE") // PUBLIC | PROGRESSIVE | PRIVATE
+  themePreference          String         @default("DARK") // DARK | LIGHT | SYSTEM
+
+  // Account Status
+  isSuspended              Boolean        @default(false)
+  suspendedReason          String?
+
+  // WhatsApp Notification Settings
+  whatsappPhoneNumber      String?        // E.164 format, e.g. +919876543210
+  whatsappVerified         Boolean        @default(false)
+
+  skills          UserSkill[]
+  experiences     StudentExperience[]
+  hackathons      StudentHackathon[]
+  pastProjects    StudentPastProject[]
+  createdProjects Project[]      @relation("ProjectCreator")
+  memberships     ProjectMember[]
+  applications    Application[]  @relation("Applicant")
+  assignedTasks   Task[]         @relation("TaskAssignee")
+  taskComments    TaskComment[]
+  uploadedFiles   ProjectFile[]
+  notifications   Notification[]
+  whatsappLogs    WhatsAppNotificationLog[] @relation("WhatsAppRecipient")
+  chatMessages    ChatMessage[]
+  conversationParticipants ConversationParticipant[]
+  sentMessages    Message[]      @relation("SentMessages")
+  blockedUsers    BlockedUser[]  @relation("BlockerRelation")
+  blockedByUsers  BlockedUser[]  @relation("BlockedRelation")
+  filedReports    Report[]       @relation("ReporterRelation")
+  receivedReports Report[]       @relation("ReportedUserRelation")
+  notificationPreference NotificationPreference?
+  deviceTokens    DeviceToken[]
+  activeSessions  ActiveSession[]
+  supportTickets  SupportTicket[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Skill {
+  id              String                 @id @default(uuid())
+  name            String                 @unique
+  category        String                 @default("General")
+  userSkills      UserSkill[]
+  projectRoles    ProjectRequiredSkill[]
+  createdAt       DateTime               @default(now())
+}
+
+model UserSkill {
+  id                 String    @id @default(uuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skillId            String
+  skill              Skill     @relation(fields: [skillId], references: [id])
+  proficiency        Int       @default(3) // 1 to 5
+  verificationStatus String    @default("SELF_DECLARED") // SELF_DECLARED | EVIDENCE_SUPPORTED | VERIFIED
+  evidenceType       String?   // GITHUB_PROJECT | PORTFOLIO | CERTIFICATE | COMPLETED_PROJECT
+  evidenceTitle      String?
+  evidenceUrl        String?
+  evidenceSummary    String?
+  evidenceConfidence Int?      @default(0) // 0 to 100 confidence score
+  evidenceConfidenceLevel String? @default("NONE") // NONE | LOW | MEDIUM | HIGH | STRONG
+  isVerified         Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@unique([userId, skillId])
+}
+
+model StudentExperience {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  company     String
+  location    String?
+  startDate   String
+  endDate     String?
+  isCurrent   Boolean   @default(false)
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model StudentHackathon {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  projectName String?
+  award       String?
+  date        String
+  description String?
+  projectUrl  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model StudentPastProject {
+  id           String    @id @default(uuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  role         String?
+  description  String
+  technologies String    // Comma-separated or JSON list
+  projectUrl   String?
+  githubUrl    String?
+  isFeatured   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Project {
+  id                   String         @id @default(uuid())
+  title                String
+  pitch                String
+  publicTeaser         String
+  problemStatement     String
+  domain               String
+  status               String         @default("RECRUITING") // DRAFT | ANALYZED | RECRUITING | IN_PROGRESS | COMPLETED
+  healthStatus         String         @default("HEALTHY")    // EXCELLENT | HEALTHY | AT_RISK | CRITICAL
+  healthScore          Int            @default(85)
+  healthSuggestions    String         @default("[]") // JSON stringified array of AI advice
+  difficulty           String         @default("INTERMEDIATE") // BEGINNER | INTERMEDIATE | ADVANCED | EXPERT
+  duration             String         @default("8 weeks")
+  teamSize             Int            @default(4)
+  workMode             String         @default("REMOTE")       // REMOTE | HYBRID | ON_SITE
+  collegeVisibility    String         @default("ANY_COLLEGE")  // MY_COLLEGE | SELECTED_COLLEGES | ANY_COLLEGE
+  selectedColleges     String         @default("[]")           // JSON string of college domains/names
+  creatorId            String
+  creator              User           @relation("ProjectCreator", fields: [creatorId], references: [id])
+  isPublic             Boolean        @default(true)
+  targetCompletionDate DateTime?
+
+  // Moderation Status
+  isRemoved            Boolean        @default(false)
+  removalReason        String?
+  
+  // Private Workspace IP (Protected by Progressive Disclosure)
+  privateRepoUrl       String?
+  privateNotes         String?
+  architectureSpec     String?
+  technicalApproach    String?
+  datasetInfo          String?
+  detailedWorkflow     String?
+  documentLinks        String?
+
+  members              ProjectMember[]
+  requiredRoles        ProjectRole[]
+  applications         Application[]
+  tasks                Task[]
+  milestones           Milestone[]
+  files                ProjectFile[]
+  chatMessages         ChatMessage[]
+  conversations        Conversation[]
+  reports              Report[]
+  allowedColleges      ProjectSelectedCollege[]
+  whatsappLogs         WhatsAppNotificationLog[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+}
+
+model ProjectRole {
+  id             String                 @id @default(uuid())
+  projectId      String
+  project        Project                @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  isFilled       Boolean                @default(false)
+  requiredMembers Int                   @default(1)
+  requiredSkills ProjectRequiredSkill[]
+  applications   Application[]
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+}
+
+model ProjectRequiredSkill {
+  id            String       @id @default(uuid())
+  projectRoleId String
+  projectRole   ProjectRole  @relation(fields: [projectRoleId], references: [id], onDelete: Cascade)
+  skillId       String
+  skill         Skill        @relation(fields: [skillId], references: [id])
+  minLevel      Int          @default(3)
+  isCritical    Boolean      @default(true)
+}
+
+model ProjectMember {
+  id        String    @id @default(uuid())
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleTitle String
+  joinedAt  DateTime  @default(now())
+
+  @@unique([projectId, userId])
+}
+
+model Application {
+  id            String       @id @default(uuid())
+  projectId     String
+  project       Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectRoleId String
+  projectRole   ProjectRole  @relation(fields: [projectRoleId], references: [id])
+  applicantId   String
+  applicant     User         @relation("Applicant", fields: [applicantId], references: [id], onDelete: Cascade)
+  pitch         String
+  relevantLinks String       @default("[]") // JSON stringified array of URLs
+  status        String       @default("PENDING") // PENDING | UNDER_REVIEW | ACCEPTED | REJECTED | WITHDRAWN
+  matchScore    Int          @default(0)
+  matchAnalysis String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([projectId, applicantId, projectRoleId])
+}
+
+model Task {
+  id          String         @id @default(uuid())
+  projectId   String
+  project     Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  status      String         @default("TODO") // TODO | IN_PROGRESS | IN_REVIEW | DONE
+  priority    String         @default("MEDIUM") // LOW | MEDIUM | HIGH | URGENT
+  weight      Float          @default(0) // Weight percentage (0 - 100)
+  progress    Int            @default(0) // Progress percentage (0 - 100)
+  assigneeId  String?
+  assignee    User?          @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  milestoneId String?
+  milestone   Milestone?     @relation(fields: [milestoneId], references: [id])
+  dueDate     DateTime?
+  comments    TaskComment[]
+  orderIndex  Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model ProjectFile {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  uploaderId  String
+  uploader    User     @relation(fields: [uploaderId], references: [id])
+  name        String
+  url         String
+  category    String   @default("DOC") // DOC | CODE | DATASET | DESIGN | OTHER
+  sizeBytes   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Milestone {
+  id          String    @id @default(uuid())
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  dueDate     DateTime
+  isCompleted Boolean   @default(false)
+  tasks       Task[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ChatMessage {
+  id        String    @id @default(uuid())
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User      @relation(fields: [senderId], references: [id])
+  content   String
+  createdAt DateTime  @default(now())
+}
+
+model Conversation {
+  id           String                    @id @default(uuid())
+  type         String                    @default("DIRECT") // DIRECT | PROJECT_TEAM
+  projectId    String?
+  project      Project?                  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title        String?                   // e.g. for group or team chat
+  participants ConversationParticipant[]
+  messages     Message[]
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+}
+
+model ConversationParticipant {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastReadAt     DateTime     @default(now())
+  joinedAt       DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  content        String
+  isRead         Boolean      @default(false)
+  readAt         DateTime?
+  reports        Report[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model BlockedUser {
+  id        String   @id @default(uuid())
+  blockerId String
+  blocker   User     @relation("BlockerRelation", fields: [blockerId], references: [id], onDelete: Cascade)
+  blockedId String
+  blocked   User     @relation("BlockedRelation", fields: [blockedId], references: [id], onDelete: Cascade)
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+}
+
+model Report {
+  id             String    @id @default(uuid())
+  reporterId     String
+  reporter       User      @relation("ReporterRelation", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUserId String
+  reportedUser   User      @relation("ReportedUserRelation", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  messageId      String?
+  message        Message?  @relation(fields: [messageId], references: [id])
+  projectId      String?
+  project        Project?  @relation(fields: [projectId], references: [id])
+  reason         String    // HARASSMENT | SPAM | INAPPROPRIATE_CONTENT | IP_LEAK | OTHER
+  details        String?
+  status         String    @default("PENDING") // PENDING | REVIEWED | RESOLVED | DISMISSED
+  createdAt      DateTime  @default(now())
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String    // NEW_APPLICATION | APPLICATION_ACCEPTED | APPLICATION_REJECTED | TEAM_INVITATION | NEW_MESSAGE | TASK_ASSIGNED | TASK_DEADLINE_APPROACHING | PROJECT_HEALTH_WARNING | SKILL_GAP_DETECTED | MILESTONE_COMPLETED
+  title     String
+  message   String
+  link      String?
+  metadata  String?   // JSON string of contextual parameters
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+}
+
+model NotificationPreference {
+  id                       String   @id @default(uuid())
+  userId                   String   @unique
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emailNotifications       Boolean  @default(true)
+  pushNotifications        Boolean  @default(true)
+  inAppNotifications       Boolean  @default(true)
+  notifyNewApplication     Boolean  @default(true)
+  notifyApplicationStatus  Boolean  @default(true)
+  notifyTeamInvitation     Boolean  @default(true)
+  notifyNewMessage         Boolean  @default(true)
+  notifyTaskAssigned       Boolean  @default(true)
+  notifyTaskDeadline       Boolean  @default(true)
+  notifyHealthWarning      Boolean  @default(true)
+  notifySkillGap           Boolean  @default(true)
+  notifyMilestoneCompleted Boolean  @default(true)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model DeviceToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  platform  String   @default("IOS") // IOS | ANDROID | WEB
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActiveSession {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ipAddress   String?
+  userAgent   String?
+  deviceType  String   @default("Desktop / Web")
+  browser     String?
+  os          String?
+  location    String?
+  isCurrent   Boolean  @default(false)
+  lastActive  DateTime @default(now())
+  createdAt   DateTime @default(now())
+}
+
+model SupportTicket {
+  id            String    @id @default(uuid())
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  category      String    // TECHNICAL_ISSUE | USER_REPORT | PROJECT_REPORT | PRIVACY_CONCERN | INAPPROPRIATE_CONTENT | OTHER
+  targetId      String?
+  subject       String
+  description   String
+  attachmentUrl String?   // Optional screenshot/file
+  email         String?
+  priority      String    @default("MEDIUM") // LOW | MEDIUM | HIGH | URGENT
+  status        String    @default("OPEN") // OPEN | IN_PROGRESS | RESOLVED | CLOSED
+  adminResponse String?
+  respondedAt   DateTime?
+  respondedBy   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model SkillCategory {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SystemSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  description String?
+  category    String   @default("GENERAL") // GENERAL | AUTH | IP_PROTECTION | AI | EMAIL
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model WhatsAppNotificationLog {
+  id                String    @id @default(uuid())
+  recipientId       String
+  recipient         User      @relation("WhatsAppRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  applicationId     String    @unique // Unique per application ensures idempotency
+  projectId         String
+  project           Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  phoneNumber       String
+  messageContent    String
+  status            String    // SENT | FAILED | NOT_CONFIGURED | NO_PHONE | ALREADY_SENT
+  provider          String    // meta | mock | console | none
+  providerMessageId String?
+  errorMessage      String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([recipientId])
+  @@index([projectId])
+  @@index([status])
+}
+

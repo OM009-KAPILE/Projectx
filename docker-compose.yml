@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # 1. PostgreSQL Relational Database
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: projectx-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-projectx}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-projectx_password}
+      POSTGRES_DB: ${POSTGRES_DB:-projectx_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-projectx} -d ${POSTGRES_DB:-projectx_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # 2. Python AI Microservice (FastAPI + Gunicorn)
+  # ---------------------------------------------------------------------------
+  ai-service:
+    build:
+      context: ./apps/ai-service
+      dockerfile: Dockerfile
+    container_name: projectx-ai-service
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # 3. Node.js + Express API Backend
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: projectx-backend
+    restart: always
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    environment:
+      - PORT=4000
+      - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://projectx:projectx_password@postgres:5432/projectx_db}
+      - AI_SERVICE_URL=http://ai-service:8000
+      - JWT_SECRET=${JWT_SECRET:-projectx_super_secret_jwt_access_key_2026}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-projectx_super_secret_jwt_refresh_key_2026}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:80}
+      - SMTP_HOST=${SMTP_HOST:-smtp.ethereal.email}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - EMAIL_FROM=${EMAIL_FROM:-ProjectX Platform <no-reply@projectx.edu>}
+      - SUPPORT_EMAIL=${SUPPORT_EMAIL:-support@projectx.edu}
+      - SUPPORT_PHONE=${SUPPORT_PHONE:-+1 (800) 555-0199}
+      - STORAGE_DRIVER=${STORAGE_DRIVER:-local}
+    volumes:
+      - uploads_data:/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4000/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # 4. React Web Application (Vite + Nginx)
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: projectx-web
+    restart: always
+    ports:
+      - "80:80"
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  postgres_data:
+  uploads_data:

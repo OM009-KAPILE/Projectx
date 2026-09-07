@@ -105,3 +105,4 @@ cd apps/ai-service && .venv/bin/pytest
 | **Rohan Sharma** | IIT Bombay | Hardware & Embedded | ROS2, Embedded C++, STM32 |
 | **Clara Rossi** | UC Berkeley | Distributed Systems | Go, PostgreSQL, Docker, Raft |
 | **David Zhang** | Carnegie Mellon | Computer Vision & SLAM | NeRF, 3D Perception, PyTorch |
+# Projectx
